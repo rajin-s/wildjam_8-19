@@ -1,0 +1,40 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Node",
+"class": "Component",
+"language": "GDScript",
+"path": "res://scripts/c_component.gd"
+} ]
+_global_script_class_icons={
+"Component": ""
+}
+
+[application]
+
+config/name="(@RajinShankar) Godot Wild Jam 8-19"
+run/main_scene="res://scenes/hand.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+debug="*res://scripts/m_debug.gd"
+
+[display]
+
+window/size/width=1920
+window/size/height=1080
+window/vsync/use_vsync=false
+
+[rendering]
+
+quality/filters/msaa=2
+environment/default_environment="res://default_env.tres"
