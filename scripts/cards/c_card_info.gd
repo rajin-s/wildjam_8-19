@@ -7,13 +7,13 @@ export( String, MULTILINE ) var text  := "Text" setget set_text
 func set_title( value: String ) -> void:
     title = value
     
-    var label: Label = $"../Separator/Object/Title/Viewport/Text"
+    var label: Label = $"../Content/Title Viewport/Text"
     if label != null:
-        label.text = title
+        label.text = value
         
 func set_text( value: String ) -> void:
     text = value
             
-    var label: Label = $"../Separator/Object/Text/Viewport/Text"
+    var label: Label = $"../Content/Text Viewport/Text"
     if label != null:
-        label.text = text
+        label.text = value

@@ -28,6 +28,13 @@ config/icon="res://icon.png"
 
 debug="*res://scripts/m_debug.gd"
 
+[debug]
+
+gdscript/warnings/unused_variable=false
+gdscript/warnings/unused_argument=false
+gdscript/warnings/unused_signal=false
+gdscript/warnings/return_value_discarded=false
+
 [display]
 
 window/size/width=1920

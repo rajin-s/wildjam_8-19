@@ -16,3 +16,4 @@ func log( channel: String, message: String ) -> void:
 func _ready() -> void:
     enable( 'main' )
     enable( 'component' )
+    enable( 'card' )
