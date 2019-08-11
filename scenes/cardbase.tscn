@@ -1,17 +1,25 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://assets/models/card_outline.obj" type="ArrayMesh" id=1]
-[ext_resource path="res://assets/models/card.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://assets/card.png" type="Texture" id=2]
 [ext_resource path="res://scripts/cards/s_3DUI_viewport.gd" type="Script" id=3]
 [ext_resource path="res://scripts/cards/s_card.gd" type="Script" id=4]
 [ext_resource path="res://scripts/s_follow.gd" type="Script" id=5]
 [ext_resource path="res://scripts/cards/c_card_info.gd" type="Script" id=6]
 [ext_resource path="res://scripts/cards/c_card_orientation.gd" type="Script" id=7]
 [ext_resource path="res://assets/card_art.shader" type="Shader" id=8]
+[ext_resource path="res://assets/card_art/frog.png" type="Texture" id=9]
+[ext_resource path="res://assets/card_art/trees.png" type="Texture" id=10]
+[ext_resource path="res://assets/card_art/floor.png" type="Texture" id=11]
 
 [sub_resource type="SpatialMaterial" id=1]
 flags_unshaded = true
-albedo_color = Color( 0, 0, 0, 1 )
+params_use_alpha_scissor = true
+params_alpha_scissor_threshold = 0.5
+albedo_texture = ExtResource( 2 )
+
+[sub_resource type="QuadMesh" id=17]
+size = Vector2( 2, 2.8 )
 
 [sub_resource type="SpatialMaterial" id=2]
 flags_unshaded = true
@@ -38,21 +46,30 @@ flags_unshaded = true
 albedo_texture = SubResource( 6 )
 
 [sub_resource type="QuadMesh" id=8]
-size = Vector2( 1.6, 0.4 )
+size = Vector2( 1.6, 0.24 )
+
+[sub_resource type="ShaderMaterial" id=18]
+shader = ExtResource( 8 )
+shader_param/color = Color( 1, 0.25098, 0.25098, 1 )
+shader_param/offset = 0.35
+shader_param/perspective = 0.002
+shader_param/tex = ExtResource( 11 )
+
+[sub_resource type="QuadMesh" id=10]
 
 [sub_resource type="ShaderMaterial" id=9]
 shader = ExtResource( 8 )
 shader_param/color = Color( 1, 0.25098, 0.25098, 1 )
-shader_param/offset = 0.0
+shader_param/offset = -0.56
 shader_param/perspective = null
-
-[sub_resource type="QuadMesh" id=10]
+shader_param/tex = ExtResource( 9 )
 
 [sub_resource type="ShaderMaterial" id=11]
 shader = ExtResource( 8 )
 shader_param/color = Color( 0.239216, 0.945098, 1, 1 )
 shader_param/offset = -0.92
-shader_param/perspective = 0.04
+shader_param/perspective = 0.0
+shader_param/tex = ExtResource( 10 )
 
 [sub_resource type="SpatialMaterial" id=12]
 flags_unshaded = true
@@ -98,7 +115,7 @@ text = "This is a coool card!"
 align = 1
 
 [node name="Title Viewport" type="Viewport" parent="Content"]
-size = Vector2( 160, 40 )
+size = Vector2( 160, 24 )
 transparent_bg = true
 handle_input_locally = false
 hdr = false
@@ -121,47 +138,55 @@ target_path = NodePath("../..")
 speed = 12.0
 
 [node name="Main" type="MeshInstance" parent="Separator/Object"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 material_override = SubResource( 1 )
-mesh = ExtResource( 2 )
+mesh = SubResource( 17 )
 material/0 = null
 
 [node name="Outline" type="MeshInstance" parent="Separator/Object/Main"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00638916, -5.94949e-10 )
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, -0.0060451 )
+visible = false
 material_override = SubResource( 2 )
 mesh = ExtResource( 1 )
 material/0 = null
 
 [node name="Text" type="MeshInstance" parent="Separator/Object"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.707825, 0.0758155 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.782051, 0.0758155 )
 material_override = SubResource( 4 )
 mesh = SubResource( 5 )
 material/0 = null
 
 [node name="Title" type="MeshInstance" parent="Separator/Object"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.118824, 1.41154, 0.0518528 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.070299, 1.26314, 0.0534974 )
 material_override = SubResource( 7 )
 mesh = SubResource( 8 )
 material/0 = null
 
 [node name="Art" type="Spatial" parent="Separator/Object"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.502242, -0.00825769 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="Separator/Object/Art"]
+transform = Transform( 1.92592, 0, 0, 0, 1.92592, 0, 0, 0, 0.722534, -0.0678264, 0.120413, 0 )
+material_override = SubResource( 18 )
+cast_shadow = 0
+mesh = SubResource( 10 )
+material/0 = null
 
 [node name="MeshInstance" type="MeshInstance" parent="Separator/Object/Art"]
-transform = Transform( 0.722534, 0, 0, 0, 0.722534, 0, 0, 0, 0.722534, 0.243902, 0.407861, -0.047064 )
+transform = Transform( 1.92592, 0, 0, 0, 1.92592, 0, 0, 0, 0.722534, 0, -0.138, -0.01 )
 material_override = SubResource( 9 )
 cast_shadow = 0
 mesh = SubResource( 10 )
 material/0 = null
 
 [node name="MeshInstance2" type="MeshInstance" parent="Separator/Object/Art"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.168087, 0.484856, -0.05 )
+transform = Transform( 1.59892, 0, 0, 0, 1.59892, 0, 0, 0, 0.990492, 0, -0.225, -0.02 )
 material_override = SubResource( 11 )
 cast_shadow = 0
 mesh = SubResource( 10 )
 material/0 = null
 
 [node name="Background" type="MeshInstance" parent="Separator/Object/Art"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.487, -0.05 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.147762, -0.05 )
 material_override = SubResource( 12 )
 mesh = SubResource( 13 )
 material/0 = null
@@ -180,7 +205,8 @@ angle_max = Vector2( 10, 10 )
 transform = Transform( 0.999999, -0.000902656, -0.000684231, 0.00090074, 0.999996, -0.00278039, 0.000686751, 0.00277976, 0.999996, 0, 0, 0 )
 shape = SubResource( 14 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
+[node name="Handle Visualizer" type="MeshInstance" parent="."]
+visible = false
 material_override = SubResource( 15 )
 mesh = SubResource( 16 )
 material/0 = null

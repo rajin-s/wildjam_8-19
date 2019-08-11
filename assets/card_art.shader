@@ -1,6 +1,7 @@
 shader_type spatial;
 render_mode unshaded, shadows_disabled, skip_vertex_transform, cull_disabled;
 
+uniform sampler2D tex;
 uniform vec4 color : hint_color;
 uniform float offset;
 uniform float perspective;
@@ -20,7 +21,7 @@ void vertex()
 	vec4 d = b - a;
 	d.xy += o.xy * perspective;
 	
-	vec4 forward = MODELVIEW_MATRIX * vec4(0,0,1,0);
+	vec4 forward = normalize(MODELVIEW_MATRIX * vec4(0,0,1,0));
 	d.xyz -= dot(d.xyz, forward.xyz) * forward.xyz;
 	
 	VERTEX = p.xyz + d.xyz;
@@ -28,5 +29,10 @@ void vertex()
 
 void fragment()
 {
-	ALBEDO = color.xyz;
+	vec4 c = texture(tex, UV);
+	ALBEDO = c.rgb;
+	if (c.a < 0.5)
+	{
+		discard;
+	}
 }
