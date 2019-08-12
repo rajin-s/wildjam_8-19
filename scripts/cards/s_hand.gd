@@ -15,6 +15,8 @@ var held_depth: float
 var focus_node: Node  = null
 var focus_index      := 0
 
+export var corner_offset := Vector2(1, 1)
+
 func _ready() -> void:
     connect_card_signals()
 
@@ -43,6 +45,13 @@ func unfocus( node: Node ) -> void:
     pass
 
 func update_row() -> void:
+    var camera := get_viewport().get_camera()
+    var bottom_left := Vector2(0, get_viewport().size.y)
+    var row_pos: Vector3 = camera.project_position(bottom_left, 5)
+    row_pos.x = row_pos.x * 100 + corner_offset.x
+    row_pos.y = row_pos.y * 100 + corner_offset.y
+    row.global_transform.origin = row_pos
+    
     for i in row.get_child_count():
         var offset := abs( i - focus_index )
         
@@ -58,8 +67,10 @@ func update_held() -> void:
         var camera := get_viewport().get_camera()
 
         var current_screen: Vector2 = get_viewport().get_mouse_position()
-        var current_world: Vector3  = camera.project_position( current_screen, held_depth ) * (camera.far + 10)
-        # This seems like a bug? Have to multiply resulting world position by the far clip plane distance...
+        var current_world: Vector3  = camera.project_position( current_screen, held_depth )
+        current_world.x *= 100
+        current_world.y *= 100
+        # This seems like a bug? Have to multiply resulting world position by approximately the far clip plane distance...??
 
         held.global_transform.origin = current_world
         
