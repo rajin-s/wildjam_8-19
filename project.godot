@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="(@RajinShankar) Godot Wild Jam 8-19"
-run/main_scene="res://scenes/hand.tscn"
+run/main_scene="res://scenes/Main.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -43,5 +43,5 @@ window/vsync/use_vsync=false
 
 [rendering]
 
-quality/filters/msaa=2
+quality/filters/msaa=1
 environment/default_environment="res://default_env.tres"
